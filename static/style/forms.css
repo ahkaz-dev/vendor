@@ -1,0 +1,144 @@
+/* 
+    Используемые шрифты: 
+        - Poppins, для английского
+        - Rubik, для русского
+*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.side-slide {
+    background: url("../img/svg/side-slide-phone.svg");
+    width: 189px;
+    height: 779.03px;
+    position: absolute; /* или fixed, relative */
+    z-index: -1; /* значение, которое поместит элемент позади других */
+    top: 15%;
+    left: 5%;
+}
+body {
+    background-color: #121212; /* Цвет фона, взятый из изображения */
+    color: white;
+}
+.header-about-num {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    margin-top: 2%;        
+    font-family: "Rubik", sans-serif;
+    margin-left: 20px;
+    font-size: 96px;
+    writing-mode: horizontal-tb; /* Обычный горизонтальный текст */
+}
+
+.right {
+    margin-top: 2%;        
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    margin-right: 20px;
+    font-size: 96px;
+    text-orientation: mixed;
+}
+
+.line {
+    position: absolute;
+    top: 6%;
+    left: 25%;
+    right: 15%;
+    height: 1px;
+    background-color: white;
+}
+/* Стили для формы */
+.form-num {
+    align-items: center;
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    width: 960px;
+    height: 640px;
+    padding: 25px;
+    background-color: #252525; /* Тональный цвет */
+    border-radius: 2%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.num-label {
+    font-family: "Rubik", sans-serif;
+    font-size: 24px;
+    color: #E0E0E0; /* Лёгкий серый для текста */
+}
+
+form input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 20px;
+    font-family: "Rubik", sans-serif;
+    background-color: #1E1E1E; /* Тёмный фон для полей */
+    color: #FFFFFF; /* Белый текст */
+    border: 1px solid #3E3E3E; /* Границы чуть светлее фона */
+    border-radius: 4px;
+}
+
+form input[type="text"]:focus {
+    outline: none;
+    border-color: #575757; /* Подсветка при фокусе */
+    background-color: #292929; /* Слегка светлее при фокусе */
+}
+
+.submit{
+    width: 49%;
+    padding: 12px 20px;
+    font-size: 24px;
+    font-family: "Poppins", sans-serif;
+    background-color: #3E3E3E; /* Тёмный цвет для кнопки */
+    color: #FFFFFF; /* Белый текст */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.cancel {
+    background-color: #c37979; /* Тёмный цвет для кнопки */
+    width: 49%;
+    padding: 12px 20px;
+    font-size: 24px;
+    font-family: "Poppins", sans-serif;
+    color: #FFFFFF; /* Белый текст */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #575757; /* Светлее при наведении */
+}
+.cancel:hover {
+    opacity: 0.75;
+}
+.agree a:hover {
+    opacity: 0.75;
+    
+}
+.agree a {
+    color: rgb(171, 171, 171);
+}
+.agree a:active {
+    opacity: 0.75;
+    color: grey;
+}
+
+.captcha-block {
+    color: #121212;
+    background-color: rgb(190, 190, 190);
+    padding: 0.6%;
+}

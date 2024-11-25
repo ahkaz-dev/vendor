@@ -1,0 +1,26 @@
+Название базы данных = vendordb
+Имя учетной записи для mysql = rootVendor (localhost)
+Пароль для учтеной записи mysql = bz8VHldnUp/_oAZK
+Глобальные привелегии = все
+
+Таблицы: 
+    тот кто "заказал звонок", заказчик
+    CREATE TABLE Customer (
+    CustomerId int NOT NULL AUTO_INCREMENT,
+    Name varchar(255) NOT NULL,
+    PhoneNumber varchar(11) NOT NULL,
+   
+    PRIMARY KEY (CustomerId)
+    );
+    
+    пользователь системы
+    CREATE TABLE UserAccount (
+    UserId int NOT NULL AUTO_INCREMENT,
+    Login varchar(20) NOT NULL,
+    Password varchar(16) NOT NULL,
+   
+    PRIMARY KEY (UserId)
+    );
+
+Сбросить счетчик id:
+    ALTER TABLE useraccount AUTO_INCREMENT = 1

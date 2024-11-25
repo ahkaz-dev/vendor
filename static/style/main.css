@@ -1,0 +1,350 @@
+/* 
+    Используемые шрифты: 
+        - Poppins, для английского
+        - Rubik, для русского
+*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+html, body {   scroll-behavior: smooth; will-change: scroll-position; overflow-x: hidden;}
+
+
+
+body {
+    margin: 0;
+    color: #000;
+    background-color: #FFFCF8;
+}
+
+
+#upbutton {
+    display: inline-block;
+    background-color: #F3C623; 
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, 
+      opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+  }
+  #upbutton::after {
+    content: "\2191";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+  }
+  #upbutton:hover {
+    cursor: pointer;
+    background-color: #333;
+  }
+  #upbutton:active {
+    background-color: #555;
+  }
+  #upbutton.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    font-size: 18px;
+}
+
+header a {
+    text-decoration: none;
+    color: #1E1E1E;
+    margin-left: 20px;
+    font-size: 26px;
+    font-family: "Rubik", sans-serif;
+    position: relative; /* Для позиционирования псевдоэлемента */
+}
+header a:hover {
+    color: #1E1E1E;
+    text-decoration: none;
+}
+
+header a::after {
+    content: ""; /* Псевдоэлемент для подчеркивания */
+    position: absolute;
+    bottom: -5px; /* Отступ под текстом */
+    left: 50%; /* Начинаем с середины */
+    transform: translateX(-50%); /* Центрируем относительно текста */
+    width: 30%; /* Изначально маленькая черта */
+    height: 2px; /* Толщина подчеркивания */
+    background-color: #1E1E1E; /* Цвет подчеркивания */
+    transition: width 0.3s ease; /* Плавное изменение ширины */
+}
+
+header a:hover::after {
+    width: 100%; /* Подчеркивание растягивается на всю ширину ссылки */
+}
+
+
+.md1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 50px 0px 0px 0px;
+    position: relative;
+}
+
+.md1-mtext{
+    font-size: 460px;
+    font-weight: 400;
+    margin: 0;
+    position: absolute;
+    top: -15%;
+    z-index: -1;
+    color: #131112;
+    font-family: "Poppins", sans-serif;
+}
+.image-wrapper img {
+    height: 650px;
+    margin-top: 180px;
+    z-index: 2;
+
+    user-select: none; /* Отключает выделение текста */
+    -webkit-user-select: none; /* Для браузеров на основе WebKit */
+    -moz-user-select: none; /* Для Firefox */
+    -ms-user-select: none; /* Для старых IE */
+}
+
+.call-to-action {
+    margin: 0;
+    position: absolute;
+    left: 5%;
+    top: 60%;
+    opacity: 1;
+    transition: 0.3s;
+}
+.call-to-action a {
+    font-family: "Rubik", sans-serif;
+    font-weight: 200;
+    padding: 20px 35px;
+    background-color: #131112;
+    border-radius: 30px;
+    border: none;
+    color: #FFFCF8;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.call-to-action:hover, .call-to-action-reverse:hover {
+    opacity: 0.75;
+    cursor: pointer;
+}
+.call-to-action:active, .call-to-action-reverse:active {
+    transform: translateY(1px);
+}
+
+.call-to-action-reverse {
+    opacity: 1;
+    transition: 0.3s;
+    width: 242.141px;
+    height: 24px;
+}
+.call-to-action-reverse a{
+    font-family: "Rubik", sans-serif;
+    font-weight: 200;
+    padding: 20px 35px;
+    background-color: #FFFCF8;
+    border-radius: 30px;
+    border: none;
+    color: #131112;
+    text-decoration: none;
+    font-size: 20px;
+
+}
+
+.description {
+    max-width: 554px;
+    font-size: 25px;
+    color: #1E1E1E;
+    font-family: "Rubik", sans-serif;
+
+    position: absolute;
+    left: 5%;
+    top: 86%;
+}
+
+.md1-links {
+    position: absolute;
+    right: 3%;
+    top: 75%;
+    
+}
+
+.animated-links {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+    display: flex; /* Располагаем ссылки в строку */
+    flex-direction: column;
+    gap: 2rem; /* Расстояние между ссылками */
+    justify-content: center; /* Центрируем ссылки */
+    align-items: flex-end;
+}
+
+.animated-links li {
+    margin: 0;
+}
+
+.animated-links a {
+    font-family: "Rubik", sans-serif;
+    text-decoration: none; /* Убираем стандартное подчеркивание */
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: black;
+    position: relative; /* Для позиционирования псевдоэлементов */
+    transition: color 0.3s ease; /* Плавный переход цвета текста */
+}
+
+.animated-links a::before {
+    content: ""; /* Изначально пустой псевдоэлемент */
+    position: absolute;
+    left: -20px; /* Отступ слева от текста */
+    top: 50%;
+    transform: translateY(-50%); /* Центрируем вертикально */
+    font-size: 1.5rem; /* Размер галочки */
+    color: transparent; /* Изначально скрытая галочка */
+    transition: color 0.3s ease; /* Плавный переход */
+}
+
+.animated-links a::after {
+    content: ""; /* Псевдоэлемент для подчеркивания */
+    position: absolute;
+    bottom: -5px; /* Отступ под текстом */
+    left: 0;
+    width: 0;
+    height: 2px; /* Толщина подчеркивания */
+    background-color: black; /* Цвет подчеркивания */
+    transition: width 0.3s ease; /* Анимация ширины */
+}
+
+.animated-links a:hover {
+    color: #F3C623; /* Меняем цвет текста при наведении */
+}
+
+.animated-links a:hover::before {
+    color: #F3C623; /* Цвет галочки */
+}
+
+.animated-links a:hover::after {
+    width: 100%; /* Подчеркивание растягивается на 100% ширины текста */
+}
+
+.md2 {
+    margin: -5px 0px 0px 0px;
+    color: #FFFCF8;
+    background-color: #131112;
+    height: 859px;
+    position: relative;
+}
+
+.header-about-num {
+    display: flex;
+    justify-content: space-between;
+}
+.left {
+    margin-top: 2%;        
+    font-family: "Rubik", sans-serif;
+    margin-left: 50px;
+    font-size: 96px;
+    writing-mode: horizontal-tb; /* Обычный горизонтальный текст */
+}
+
+.right {
+    margin-top: 2%;        
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    margin-right: 20px;
+    font-size: 75px;
+    text-orientation: mixed;
+}
+
+.line {
+    position: absolute;
+    top: 6%;
+    left: 25%;
+    right: 15%;
+    height: 1px;
+    background-color: white;
+}
+
+.md-content {
+    position: absolute;
+    top: 28%;
+    left: 3%;
+    display: flex;
+}
+.content-text-main {
+    margin-top: 0px;
+    width: 815px;
+}
+.content-text-citata {
+    font-weight: 600;
+    text-align: center;
+    color: #d1bb7e;
+}
+.content-text-endtext {
+    width: 815px;
+}
+.content-text {
+    margin-left: 2%;
+    font-family: "Rubik", sans-serif;
+    font-size: 24px;
+    width: 815px;
+}
+.slide-idea {
+    background-image: url("../img/svg/center-slide-idea.svg");
+    width: 905.81px;
+    height: 365px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.photo-name {
+    margin-top: -14%;
+}
+.photo-name p {
+    margin-bottom: 0px;
+}
+.photo-name span {
+    font-size: 14px;
+    font-weight: 200;
+}
+
+@media all and (max-width: 1000px) {
+
+}
+
+
+@media (max-width: 768px) {
+    header a {
+        font-size: 1.0rem; /* Уменьшаем общий размер шрифта */
+    }
+}
+
+@media (max-width: 480px) {
+    header a {
+        font-size: 0.9rem; /* Уменьшаем общий размер шрифта */
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
