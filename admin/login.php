@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $message = "Вы были зарегистрированы!";
         } else {
-            $message = "Ошибка: Не удалось зарегистрироваться";
+            $message = "Не удалось зарегистрироваться";
         }
     } catch (PDOException $e) {
         $message = "Ошибка: " . $e->getMessage();
@@ -30,19 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Пытаемся найти данные в базе
         $stmt = $pdo->prepare("SELECT * FROM useraccount WHERE Login=:login AND Password=:password");
-        $stmt->bindParam(':login', $login, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-
-        $stmt = $pdo->prepare("SELECT * FROM useraccount WHERE Login=:login AND Password=:password");
         $stmt->execute(['login' => $login, 'password' => $password]);
         $user = $stmt->fetch();
 
         if (!empty($user)) {
+            $_SESSION["admin-status"] = "yes"; 
             echo '<script type="text/javascript">';
-            echo 'window.location.href = "http://localhost/vendor_rabota";';
+            echo 'window.location.href = "http://localhost/vendor_rabota/admin/index.php";';
             echo '</script>';
         } else {
-            $message = "Ошибка: Не удалось найти пользователя";
+            $message = "Не удалось найти пользователя";
         }
     } catch (PDOException $e) {
         $message = "Ошибка: " . $e->getMessage();
@@ -60,9 +57,15 @@ require_once '../config/dublicateQuery.php';  // Подключаем файл �
     <link rel="stylesheet" href="../static/style/login.css">
 </head>
 <body>
-<?php if ($message): ?>
-        <p><strong><?php echo htmlspecialchars($message); ?></strong></p>
-    <?php endif; ?>    
+<?php 
+    if ($message) {
+        if (str_contains($message, "Вы")) {
+            echo "<p><strong class='notification_yes'>$message</strong></p>";
+        } else if (str_contains($message, "Не")) {
+            echo "<p><strong class='notification_no'>$message</strong></p>";
+        }
+    }
+?>  
 <div class="login-page">
   <div class="form">
     <form class="register-form" method="POST">

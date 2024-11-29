@@ -113,3 +113,20 @@ html {
 .back-out input:hover {
     opacity: 0.75;
 }
+
+.notification_yes {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #085819;
+  color: #e8e8e8;
+  font-weight: bold;
+  margin: 50px 0;
+}
+.notification_no {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #b51b28;
+  color: #e8e8e8;
+  font-weight: bold;
+  margin: 50px 0;
+}
