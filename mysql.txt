@@ -18,6 +18,7 @@
     UserId int NOT NULL AUTO_INCREMENT,
     Login varchar(20) NOT NULL,
     Password varchar(16) NOT NULL,
+    StatusRole varchar(255) NOT NULL,
    
     PRIMARY KEY (UserId)
     );

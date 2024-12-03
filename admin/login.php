@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phonenubmer = trim($_POST['phonenubmer']);
     try {
         // Сохраняем данные в базе
-        $stmt = $pdo->prepare("INSERT INTO useraccount (Login, Password) VALUES (:login, :password)");
+        $stmt = $pdo->prepare("INSERT INTO useraccount (Login, Password, StatusRole) VALUES (:login, :password, 'Пользователь')");
         $stmt->bindParam(':login', $login, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if (!empty($user)) {
-            $_SESSION["admin-status"] = "yes"; 
+            $_SESSION["admin-status"] = $user["StatusRole"]; 
             echo '<script type="text/javascript">';
             echo 'window.location.href = "http://localhost/vendor_rabota/admin/index.php";';
             echo '</script>';

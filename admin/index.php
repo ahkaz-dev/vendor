@@ -1,7 +1,8 @@
 <?php 
 session_start();
 
-if (isset($_SESSION["admin-status"])) { ?>
+if (isset($_SESSION["admin-status"])) { 
+    if ($_SESSION["admin-status"] == "Модератор") { ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,8 +78,12 @@ if (isset($_SESSION["admin-status"])) { ?>
 </body>
 </html>
 <?php 
+    } else { ?>
+    <p>У вас нет доступа к этой странице</p>
+    <?php
+    }
 } else { ?>
-<p>У вас нет доступа к этой странице</p>
-<?php
-}  
+    <p>У вас нет доступа к этой странице</p>
+    <?php
+} 
 ?>
