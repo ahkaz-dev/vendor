@@ -9,12 +9,12 @@ session_start();
     <title>Vendor</title>
     <link rel="stylesheet" href="static/style/main.css">
 </head>
-<body>
+<div>
     <!-- up button -->
     <a id="upbutton"></a>
     <header>
         <a href="#about-us">О нас</a>
-        <a href="#">Наши товары</a>
+        <a href="#anch-slider">Наши товары</a>
         <a href="#">Контакты</a>
         <a href="#">Помощь</a>
     </header>
@@ -74,6 +74,122 @@ session_start();
             </div>
         </div>
     </div>    
+<div class="main-block">
+    <!-- Полоска с названием -->
+    <div class="header-block">
+        <div class="liner"></div>
+        <h1  id="anch-slider">ТОВАРЫ</h1>
+    </div>
+
+    <div class="text-block" style="border: 3px dashed rgba(184, 184, 184, 0.31); padding: 15px 15px 45px 2%; margin-left: 50px;">
+        <span class="slider-label" style="text-align: left; font-size:large;">
+            Какова наша Цель?
+        </span>
+        <p class="description-s" style="text-align: center;">Наша миссия — объединить наследие технологических гигантов и создать для вас опыт, достойный XXI века.<br>
+        Обращайтесь за товарами к нам
+        </p>
+        <br>
+        <div class="call-to-action-reverse">
+            <a href="./forms/phonereg.php">Сделать звонок →</a>
+        </div>
+    </div>
+
+    <div class="text-block-label" style="margin:2% 0px 0px 0px;display: flex;justify-content: center;">
+        <h3 class="slider-label" style="color:#d1bb7e">
+            Онлайн товары на складе
+        </h3>
+    </div>
+    <div class="infinite-slider-container">
+    <button class="slider-btn left-btn">‹</button>
+        <div class="infinite-slider">
+            <div class="slide">
+                <h3>iPhone 15 Pro</h3>
+                <p>Топовый смартфон с A17 Pro и потрясающим дизайном.</p>
+                <span>Цена: $999</span>
+            </div>
+            <div class="slide">
+                <h3>Samsung Galaxy S23</h3>
+                <p>Идеальный выбор для тех, кто любит Android.</p>
+                <span>Цена: $799</span>
+            </div>
+            <div class="slide">
+                <h3>Google Pixel 8</h3>
+                <p>Невероятная камера и чистый Android.</p>
+                <span>Цена: $699</span>
+            </div>
+            <div class="slide">
+                <h3>Xiaomi Mi 13</h3>
+                <p>Лучший выбор по соотношению цена-качество.</p>
+                <span>Цена: $599</span>
+            </div>
+        </div>
+    <button class="slider-btn right-btn">›</button>
+    </div>
+    <div class="back-img-slider"></div>
+    <div class="text-block-label" style="margin:2% 0px 0px 0px;display: flex;justify-content: center;">
+        <p class="slider-label">
+            Почему именно наши товары?
+        </p>
+    </div>
+    <div class="content-block">
+        <div class="item">
+            <svg width="50" height="50">       
+                <image xlink:href="https://www.svgrepo.com/show/164168/king.svg" width="50" height="50"/>    
+            </svg>
+            <h3>Популярность</h3>
+            <p>Наши смартфоны пользуются огромной популярностью среди пользователей благодаря своим передовым технологиям и стильному дизайну.</p>
+        </div>
+        <div class="item">
+            <svg width="50" height="50">       
+                <image xlink:href="https://www.svgrepo.com/show/150950/heart.svg" width="50" height="50"/>    
+            </svg>
+            <h3>Востребованность</h3>
+            <p>Мы предлагаем только те модели, которые наиболее востребованы на рынке, обеспечивая вам лучший выбор.</p>
+        </div>
+        <div class="item">
+            <svg width="50" height="50">       
+                <image xlink:href="https://www.svgrepo.com/show/2458/medal.svg" width="50" height="50"/>    
+            </svg>
+            <h3>Уникальность</h3>
+            <p>Каждый смартфон в нашем магазине уникален и предлагает уникальные функции, которые вы не найдете нигде больше.</p>
+        </div>
+        <div class="item">
+            <svg width="50" height="50">       
+                <image xlink:href="https://www.svgrepo.com/show/101580/podium.svg" width="50" height="50"/>    
+            </svg>
+            <h3>Незаменимость</h3>
+            <p>Наши смартфоны станут незаменимыми помощниками в вашей повседневной жизни, обеспечивая высокую производительность и надежность.</p>
+        </div>
+    </div>  
+    <div class="text-block" style="display: flex; flex-direction: column; max-width: none; padding-left: none; align-items: center;">
+        <span class="slider-label" style="text-align: center; font-size:large;">
+            Нашли свой идеальный телефон?
+        </span>
+        <p class="description-s" style="text-align: center;">
+        <u>Нажмите кнопку</u> ниже и <u>оставьте нам свой номер телефона</u>.<br>Это поможет нам связаться с вами, предложить лучшие условия покупки и ответить на все ваши вопросы. <br>
+        <br>Мы ценим ваше время и стремимся сделать ваш опыт покупки максимально приятным и комфортным.
+        </p>
+        <br>
+        <div class="call-to-action-reverse" style="margin-bottom:45px;" >
+            <a href="./forms/phonereg.php" style="font-size: 16px;">Оставить номер →</a>
+        </div>
+    </div>     
+</div>
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-links">
+      <a href="#about-us">О нас</a>
+      <a href="#anch-slider">Наши товары</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#help">Помощь</a>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Vendor. Все права защищены.</p>
+    </div>
+  </div>
+</div>
+
+    <script type="text/javascript" src="static/js/slider_main.js" ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="static/js/up_button.js" ></script>
 </body>

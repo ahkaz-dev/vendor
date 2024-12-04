@@ -23,5 +23,5 @@
     PRIMARY KEY (UserId)
     );
 
-Сбросить счетчик id:
+Если нужно сбросить счетчик id:
     ALTER TABLE useraccount AUTO_INCREMENT = 1
