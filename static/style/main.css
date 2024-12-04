@@ -400,69 +400,74 @@ header a:hover::after {
   }
   
 /* Контейнер для слайдера */
+/* Контейнер для слайдера */
 .infinite-slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    max-width: 800px;
-    margin: 0px auto;
-    overflow: hidden;
-    background: #5b574b;
-    border-radius: 15px;
-    padding: 20px;
-  }
-  
-  /* Сами слайды */
-  .infinite-slider {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
-  }
-  
-  /* Единичный слайд */
-  .slide {
-    min-width: 200px;
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin: 0 10px;
-  }
-  
-  /* Кнопки навигации */
-  .slider-btn {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .slider-btn.left-btn {
-    left: 10px;
-  }
-  
-  .slider-btn.right-btn {
-    right: 10px;
-  }
-  
-  .slider-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 800px;
+  margin: 0px auto;
+  overflow: hidden;
+  background: #5b574b;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+/* Сами слайды */
+.infinite-slider {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Единичный слайд */
+.slide {
+  min-width: 200px;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 10px;
+}
+
+/* Кнопки навигации */
+.slider-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.slider-btn.left-btn {
+  left: 10px;
+}
+
+.slider-btn.right-btn {
+  right: 10px;
+}
+
+.slider-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+
+
   
   .back-img-slider {
     background-image: url('../img/svg/slider-slide-back.svg');

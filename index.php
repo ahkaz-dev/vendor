@@ -1,5 +1,14 @@
 <?php 
 session_start();
+require_once('/xampp/htdocs/VENDOR_RABOTA/config/db.php');
+
+try {
+    // Пытаемся найти данные в базе
+    $stmt = $pdo->prepare("SELECT * FROM AllPhoneWare ORDER BY PhoneId DESC LIMIT 4;");
+    $stmt->execute();
+} catch (PDOException $e) {
+    $message = "Ошибка: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -64,7 +73,7 @@ session_start();
                 </p>
                 <div class="slide-idea">
                     <div class="call-to-action-reverse">
-                        <a>Попасть к нам →</a>
+                        <a href="admin/login.php">Попасть к нам →</a>
                     </div>   
                 </div> 
                 <div class="photo-name">
@@ -99,32 +108,25 @@ session_start();
             Онлайн товары на складе
         </h3>
     </div>
+
     <div class="infinite-slider-container">
     <button class="slider-btn left-btn">‹</button>
         <div class="infinite-slider">
-            <div class="slide">
-                <h3>iPhone 15 Pro</h3>
-                <p>Топовый смартфон с A17 Pro и потрясающим дизайном.</p>
-                <span>Цена: $999</span>
-            </div>
-            <div class="slide">
-                <h3>Samsung Galaxy S23</h3>
-                <p>Идеальный выбор для тех, кто любит Android.</p>
-                <span>Цена: $799</span>
-            </div>
-            <div class="slide">
-                <h3>Google Pixel 8</h3>
-                <p>Невероятная камера и чистый Android.</p>
-                <span>Цена: $699</span>
-            </div>
-            <div class="slide">
-                <h3>Xiaomi Mi 13</h3>
-                <p>Лучший выбор по соотношению цена-качество.</p>
-                <span>Цена: $599</span>
-            </div>
+            <?php 
+            while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { ?>
+                <div class="slide">
+                    <h3><?= htmlspecialchars($row->PhoneMark) ?>  <?= htmlspecialchars($row->PhoneModel) ?></h3>
+                    <p>Топовый смартфон c потрясающим дизайном.</p>
+                    <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?></span>
+                </div>        
+            <?php }
+            ?>
         </div>
     <button class="slider-btn right-btn">›</button>
     </div>
+
+
+
     <div class="back-img-slider"></div>
     <div class="text-block-label" style="margin:2% 0px 0px 0px;display: flex;justify-content: center;">
         <p class="slider-label">

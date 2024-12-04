@@ -12,6 +12,17 @@
    
     PRIMARY KEY (CustomerId)
     );
+
+    телефоны, которые есть на складе
+    CREATE TABLE AllPhoneWare (
+    PhoneId int NOT NULL AUTO_INCREMENT,
+    PhoneMark varchar(255) NOT NULL,
+    PhoneModel varchar(255) NOT NULL,
+    CountInStorage varchar(255) NOT NULL,
+    PhonePrice varchar(25) NOT NULL,
+   
+    PRIMARY KEY (PhoneId)
+    );
     
     пользователь системы
     CREATE TABLE UserAccount (

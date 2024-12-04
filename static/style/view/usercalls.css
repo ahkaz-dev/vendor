@@ -1,0 +1,60 @@
+.table-container {
+    overflow-x: auto;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .data-table thead {
+    background-color: #eebf62;
+    color: white;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .data-table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  .data-table tbody tr:hover {
+    background-color: #e8ae3974;
+    cursor: pointer;
+  }
+  
+  .data-table th {
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .action-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  .action-btn.edit-btn {
+    color: #00aaff;
+  }
+  
+  .action-btn.delete-btn {
+    color: #ff4d4d;
+  }
+  
+  .action-btn:hover {
+    opacity: 0.8;
+  }
+  

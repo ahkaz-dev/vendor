@@ -1,0 +1,32 @@
+#toggleButton {
+    margin-left: 1%;
+}
+
+.slide-block {
+    position: fixed;
+    top: 0;
+    left: -50%; /* Initial position off-screen */
+    width: 300px;
+    height: 100%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: left 0.5s ease;
+}
+
+.slide-block.active {
+    left: 0; /* Slide in position */
+}
+
+#slideForm input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#slideForm button {
+    padding: 10px 20px;
+    margin-right: 10px;
+}
