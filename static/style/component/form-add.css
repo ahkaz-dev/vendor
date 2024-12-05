@@ -18,9 +18,24 @@
     left: 0; /* Slide in position */
 }
 
+#updateButton {
+    display: none;
+}
+#updateButton.active {
+    display: inline-block
+}
+#submitButton {
+    display: none;
+}
+#submitButton.active {
+    display: inline-block
+}
+    
+
 #slideForm input {
     display: block;
     margin-bottom: 10px;
+    margin-top: 10px;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;

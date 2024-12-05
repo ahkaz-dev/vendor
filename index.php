@@ -117,7 +117,7 @@ try {
                 <div class="slide">
                     <h3><?= htmlspecialchars($row->PhoneMark) ?>  <?= htmlspecialchars($row->PhoneModel) ?></h3>
                     <p>Топовый смартфон c потрясающим дизайном.</p>
-                    <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?></span>
+                    <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?>$</span>
                 </div>        
             <?php }
             ?>

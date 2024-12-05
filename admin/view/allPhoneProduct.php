@@ -38,11 +38,25 @@ if (isset($_SESSION["admin-status"])) {
 
 <div id="slideBlock" class="slide-block">
     <form id="slideForm" method="POST">
-        <input type="text" placeholder="Марка" name="mark">
-        <input type="text" placeholder="Модель" name="model">
-        <input type="text" placeholder="Количество" name="count">
-        <input type="text" placeholder="Цена" name="price">
+        <div style="display:ruby-text">
+            <label for="phoneId">Вы работаете с</label>
+            <input type="text" id="phoneId" name="phoneId" readonly style="width: max-content;">
+        </div>
 
+        <input type="text" placeholder="Марка" name="mark" id="mark" pattern="^[A-Z][A-Za-z -]*$" style="margin-bottom:0px;" maxlength="15" required>
+        <span style="opacity:0.75;font-size:15px">Пример: Iphone</span>
+        
+        <input type="text" placeholder="Модель" name="model" id="model" pattern="^[A-Za-z0-9 -]*$" style="margin-bottom:0px;" maxlength="10" required>
+        <span style="opacity:0.75;font-size:15px">Пример: 16 PRO</span>
+        
+        <input type="text" placeholder="Количество" name="count" id="count" pattern="^\d+$" style="margin-bottom:0px;" maxlength="10" required>
+        <span style="opacity:0.75;font-size:15px">Пример: 25</span>
+
+        <input type="text" placeholder="Цена" name="price" id="price" pattern="^\d+$" style="margin-bottom:0px;" maxlength="10" required>
+        <span style="opacity:0.75;font-size:15px">Пример: 148990</span>
+
+        <br><br>
+        <button type="submit" id="updateButton" name="updateRequest">Обновить</button>
         <button type="submit" id="submitButton">Отправить</button>
         <button type="button" id="clearButton">Очистить</button>
     </form>
@@ -80,19 +94,14 @@ if (isset($_SESSION["admin-status"])) {
         </thead>
         <?php
         while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
-            echo '<tr>';
+            echo '<tr class="list-items">';
             echo '<td>' . htmlspecialchars($row->PhoneId) . '</td>';
             echo '<td>' . htmlspecialchars($row->PhoneMark) . '</td>';
             echo '<td>' . htmlspecialchars($row->PhoneModel) . '</td>';
             echo '<td>' . htmlspecialchars($row->CountInStorage) . '</td>';
             echo '<td>' . htmlspecialchars($row->PhonePrice) . '</td>';
             echo '<td>
-                    <button class="action-btn edit-btn" title="Редактировать">
-                      <i class="fa fa-pencil"></i>
-                    </button>
-                    <button class="action-btn delete-btn" title="Удалить">
-                      <i class="fa fa-trash"></i>
-                    </button>
+                      <a href="?phoneId='. htmlspecialchars($row->PhoneId) .'">удалить</a>
                   </td>';
             echo '</tr>';
         }
@@ -148,33 +157,85 @@ if (isset($_SESSION["admin-status"])) {
 </div>
 <?php } 
 } 
-// Обработка данных формы
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Получаем данные из формы
     $model = trim($_POST['model']);
     $price = trim($_POST['price']);
     $count = trim($_POST['count']);
     $mark = trim($_POST['mark']);
-    try {
-        // Сохраняем данные в базе
-        $stmt = $pdo->prepare("INSERT INTO AllPhoneWare (PhoneMark, PhoneModel, CountInStorage, PhonePrice) VALUES (:PhoneMark, :PhoneModel, :CountInStorage, :PhonePrice)");
-        $stmt->bindParam(':PhoneMark', $mark, PDO::PARAM_STR);
-        $stmt->bindParam(':PhoneModel', $model, PDO::PARAM_STR);
-        $stmt->bindParam(':CountInStorage', $count, PDO::PARAM_STR);
-        $stmt->bindParam(':PhonePrice', $price, PDO::PARAM_STR);
+    $phoneId = trim($_POST['phoneId'] ?? '');
 
-        if ($stmt->execute()) {
-            $message = "Добавлено";
-            echo '<script type="text/javascript">';
-            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allPhoneProduct.php";';
-            echo '</script>';
+    try {
+        if (!empty($phoneId)) {
+            // Если `phoneId` передан, обновляем существующую запись
+            $stmt = $pdo->prepare(
+                "UPDATE AllPhoneWare 
+                 SET PhoneMark = :PhoneMark, 
+                     PhoneModel = :PhoneModel, 
+                     CountInStorage = :CountInStorage, 
+                     PhonePrice = :PhonePrice 
+                 WHERE PhoneId = :PhoneId"
+            );
+            $stmt->bindParam(':PhoneMark', $mark, PDO::PARAM_STR);
+            $stmt->bindParam(':PhoneModel', $model, PDO::PARAM_STR);
+            $stmt->bindParam(':CountInStorage', $count, PDO::PARAM_INT);
+            $stmt->bindParam(':PhonePrice', $price, PDO::PARAM_STR);
+            $stmt->bindParam(':PhoneId', $phoneId, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                $message = "Запись успешно обновлена.";
+            } else {
+                $message = "Ошибка: не удалось обновить запись.";
+            }
         } else {
-            $message = "Ошибка: Не удалось добавить";
+            // Если `phoneId` отсутствует, добавляем новую запись
+            $stmt = $pdo->prepare(
+                "INSERT INTO AllPhoneWare (PhoneMark, PhoneModel, CountInStorage, PhonePrice) 
+                 VALUES (:PhoneMark, :PhoneModel, :CountInStorage, :PhonePrice)"
+            );
+            $stmt->bindParam(':PhoneMark', $mark, PDO::PARAM_STR);
+            $stmt->bindParam(':PhoneModel', $model, PDO::PARAM_STR);
+            $stmt->bindParam(':CountInStorage', $count, PDO::PARAM_INT);
+            $stmt->bindParam(':PhonePrice', $price, PDO::PARAM_STR);
+
+            if ($stmt->execute()) {
+                $message = "Запись успешно добавлена.";
+            } else {
+                $message = "Ошибка: не удалось добавить запись.";
+            }
         }
+
+        // Перенаправление после успешного выполнения
+        echo '<script type="text/javascript">';
+        echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allPhoneProduct.php";';
+        echo '</script>';
     } catch (PDOException $e) {
         $message = "Ошибка: " . $e->getMessage();
     }
 }
+
+if (isset($_GET['phoneId'])) {
+    $Id = $_GET['phoneId'];
+
+    try {
+        // Подготовка запроса с использованием параметра
+        $stmt = $pdo->prepare("DELETE FROM `AllPhoneWare` WHERE `phoneId` = :phoneId");
+        $stmt->bindParam(':phoneId', $Id, PDO::PARAM_INT); // Привязка параметра
+
+        // Выполнение запроса
+        if ($stmt->execute()) {
+            echo '<script type="text/javascript">';
+            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allPhoneProduct.php";';
+            echo '</script>';
+        } else {
+            echo "Ошибка при удалении записи.";
+        }
+    } catch (PDOException $e) {
+        echo "Ошибка: " . $e->getMessage();
+    }
+}
+
+
 require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Подключаем файл с запросом на дубликаты
 
 ?>
@@ -182,28 +243,82 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('toggleButton');
+    const updateButton = document.getElementById('updateButton');
+
     const slideBlock = document.getElementById('slideBlock');
     const clearButton = document.getElementById('clearButton');
     const submitButton = document.getElementById('submitButton');
 
-    toggleButton.addEventListener('click', function() {
-        slideBlock.classList.toggle('active');
-    });
+    const rows = document.querySelectorAll('tr.list-items');
+    const markInput = document.getElementById('mark');
+    const modelInput = document.getElementById('model');
+    const countInput = document.getElementById('count');
+    const priceInput = document.getElementById('price');
+    const phoneId = document.getElementById('phoneId');
 
-    document.addEventListener('click', function(event) {
-        if (!slideBlock.contains(event.target) && event.target !== toggleButton) {
-            slideBlock.classList.remove('active');
+
+    toggleButton.addEventListener('click', function () {
+        // Переключаем состояние блока
+        slideBlock.classList.toggle('active');
+
+        // Если форма активирована через toggleButton, показываем "Submit", скрываем "Update"
+        if (slideBlock.classList.contains('active')) {
+            submitButton.classList.add('active');
+            updateButton.classList.remove('active');
+            // Очищаем инпуты от данных
+            phoneId.value = "";
+            markInput.value = "";
+            modelInput.value = "";
+            countInput.value = "";
+            priceInput.value = "";
+        } else {
+            // Если форма закрывается, обе кнопки скрыты
+            submitButton.classList.remove('active');
+            updateButton.classList.remove('active');
         }
     });
+
+    rows.forEach(row => {
+        row.addEventListener('click', function () {
+            // Открываем форму, если она скрыта
+            slideBlock.classList.add('active');
+
+            // Показываем "Update", скрываем "Submit"
+            updateButton.classList.add('active');
+            submitButton.classList.remove('active');
+
+            // Заполняем данные формы из строки
+            const cells = row.querySelectorAll('td');
+            phoneId.value = cells[0].textContent.trim();
+            markInput.value = cells[1].textContent.trim();
+            modelInput.value = cells[2].textContent.trim();
+            countInput.value = cells[3].textContent.trim();
+            priceInput.value = cells[4].textContent.trim();
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        const isClickInsideRow = Array.from(rows).some(row => row.contains(event.target));
+
+        // Если клик не внутри формы, кнопки или строки, закрываем форму
+        if (
+            !slideBlock.contains(event.target) &&
+            event.target !== toggleButton &&
+            !isClickInsideRow
+        ) {
+            slideBlock.classList.remove('active');
+
+            // Скрываем обе кнопки
+            submitButton.classList.remove('active');
+            updateButton.classList.remove('active');
+        }
+    });
+
+
 
     clearButton.addEventListener('click', function() {
         document.getElementById('slideForm').reset();
     });
-
-    // submitButton.addEventListener('click', function() {
-    //     alert('Form submitted!');
-    //     // Here you can add your form submission logic
-    // });
 });
 
 </script>
