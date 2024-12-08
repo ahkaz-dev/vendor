@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phonenubmer = trim($_POST['phonenubmer']);
     try {
         // Сохраняем данные в базе
-        $stmt = $pdo->prepare("INSERT INTO useraccount (Login, Password, StatusRole) VALUES (:login, :password, 'Пользователь')");
+        $stmt = $pdo->prepare("INSERT INTO useraccount (Login, Password, PhoneNumber, StatusRole) VALUES (:login, :password, :number,'Пользователь')");
         $stmt->bindParam(':login', $login, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':number', $phonenubmer, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $message = "Вы были зарегистрированы!";
@@ -35,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($user)) {
             $_SESSION["admin-status"] = $user["StatusRole"]; 
+            $_SESSION["admin-id"] = $user["UserId"]; 
+
             echo '<script type="text/javascript">';
             echo 'window.location.href = "http://localhost/vendor_rabota/admin/index.php";';
             echo '</script>';
@@ -79,7 +82,7 @@ require_once '../config/dublicateQuery.php';  // Подключаем файл �
         <input type="password" placeholder="Пароль" name="password" required pattern="^[a-zA-Z0-9!_\-\)\(]{8,16}$"  maxlength="16"/>
         <span onclick="let a=this.parentElement.children[0];(a.type==='password')?a.setAttribute('type','text'):a.setAttribute('type','password')" style='cursor:help;align-content: center;'>👁</span>
         </label>
-         <span class="form-span-info">Используйте латинские буквы,<br> цифры или знаки !_-)( <u>От 8 до 16 символов</u></span><br><br>     
+         <span class="form-span-info">Используйте английские буквы,<br> цифры или знаки !_-)( <u>От 8 до 16 символов</u></span><br><br>     
     
         <label for="phonenubmer">Введите номер телефона</label><br>
         <input type="text" placeholder="Номер телефона" name="phonenubmer" required pattern="^\d{11}$" maxlength="11"/>

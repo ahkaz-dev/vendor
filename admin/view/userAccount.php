@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Звонки</title>
+    <title>Учетные записи</title>
     <link rel="stylesheet" href="/vendor_rabota/static/style/login.css">
     <link rel="stylesheet" href="/vendor_rabota/static/style/view/usercalls.css">
     <link rel="stylesheet" href="/vendor_rabota/static/style/view/dashboard.css">
@@ -23,7 +23,7 @@
         <a href="http://localhost/vendor_rabota/" class="breadcrumb-link">Главная</a>
         <a href="http://localhost/vendor_rabota/admin/" class="breadcrumb-link">Дашборд</a>
         <span>•</span>
-        <a href="#" class="breadcrumb-link">Звонки</a>
+        <a href="#" class="breadcrumb-link">Учетные записи пользователей</a>
     </div>   
     
    
@@ -37,17 +37,27 @@ if (isset($_SESSION["admin-status"])) {
 <button id="toggleButton">Добавить</button>
 
 <div id="slideBlock" class="slide-block">
-    <form id="slideForm" method="POST">
+    <form id="slideForm" method="POST" name="addNewAccount">
         <div style="display:ruby-text">
-            <label for="customerId">Вы работаете с</label>
-            <input type="text" id="customerId" name="customerId" readonly style="width: max-content;">
+            <label for="accountId">Вы работаете с</label>
+            <input type="text" id="accountId" name="accountId" readonly style="width: max-content;">
         </div>
 
-        <input type="text" placeholder="Имя заказчика" name="customerName" id="customerName" pattern="^[А-ЯЁ][а-яёА-ЯЁ\s-]*$" style="margin-bottom:0px;" maxlength="15" required>
-        <span style="opacity:0.75;font-size:15px">Пример: Антон</span>
+        <input type="text" placeholder="Логин" name="accountName" id="accountName" pattern="^[a-zA-Z][a-zA-Z _\-]{9,19}$" style="margin-bottom:0px;" maxlength="20" required>
+        <span style="opacity:0.75;font-size:15px">Буквы, цифры, пробел, подчеркивание, тире (мин. 9 символов)</span>
         
-        <input type="text" placeholder="Номер телефона" name="customerPhone" id="customerPhone" pattern="^\d{11}$" style="margin-bottom:0px;" maxlength="11" required>
-        <span style="opacity:0.75;font-size:15px">Пример: 79183213311</span>
+        <input type="text" placeholder="Пароль" name="accountPassword" id="accountPassword" pattern="^[a-zA-Z0-9!_\-\)\(]{8,16}$" style="margin-bottom:0px;" maxlength="16" required>
+        <span style="opacity:0.75;font-size:15px">Знаки: !_-)( буквы, цифры</span>
+
+        <input type="text" placeholder="Номер телефона" name="phonenubmer" id="phonenubmer" required pattern="^\d{11}$" maxlength="11"/>
+        <span style="opacity:0.75;font-size:15px;">Пример: 79182332322</span><br><br>
+        
+        <label for="role">Роль:</label>
+        <select id="role" name="roles" required>
+            <option value="" disabled selected>--- Выберите роль ---</option>
+            <option value="Пользователь">Пользователь</option>
+            <option value="Модератор">Модератор</option>
+        </select>
         
         <br><br>
         <button type="submit" id="updateButton" name="updateRequest">Обновить</button>
@@ -58,7 +68,7 @@ if (isset($_SESSION["admin-status"])) {
 <?php
         try {
             // Пытаемся найти данные в базе
-            $stmt = $pdo->prepare("SELECT * FROM Customer ORDER BY CustomerId ASC");
+            $stmt = $pdo->prepare("SELECT * FROM useraccount ORDER BY UserId ASC");
             $stmt->execute();
 
         } catch (PDOException $e) {
@@ -78,20 +88,28 @@ if (isset($_SESSION["admin-status"])) {
     <table class="data-table">
         <thead>
             <tr>
-                <th>Идентификатор звонка</th>
-                <th>Имя заказчика</th>
+                <th>Идентификатор учетной записи</th>
+                <th>Логин</th>
+                <th>Пароль</th>
                 <th>Номер телефона</th>
+                <th>Статус учетной записи</th>
                 <th>Действия</th>
             </tr>
         </thead>
         <?php
         while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
-            echo '<tr class="list-items">';
-            echo '<td>' . htmlspecialchars($row->CustomerId) . '</td>';
-            echo '<td>' . htmlspecialchars($row->Name) . '</td>';
+            if ($_SESSION["admin-id"] == $row->UserId) {
+                echo '<tr class="list-items" style="pointer-events: none; background-color:#999999d4;">';
+            } else {
+                echo '<tr class="list-items">';
+            }
+            echo '<td>' . htmlspecialchars($row->UserId) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Login) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Password) . '</td>';
             echo '<td>' . htmlspecialchars($row->PhoneNumber) . '</td>';
+            echo '<td>' . htmlspecialchars($row->StatusRole) . '</td>';
             echo '<td>
-                      <a href="?customerId='. htmlspecialchars($row->CustomerId) .'">удалить</a>
+                      <a href="?accountId='. htmlspecialchars($row->UserId) .'">удалить</a>
                   </td>';
             echo '</tr>';
         }
@@ -102,64 +120,34 @@ if (isset($_SESSION["admin-status"])) {
 <?php
     } else if ($_SESSION["admin-status"] == "Пользователь") { ?>
     <?php
-    try {
-        // Пытаемся найти данные в базе
-        $stmt = $pdo->prepare("SELECT * FROM Customer ORDER BY CustomerId ASC");
-        $stmt->execute();
-
-    } catch (PDOException $e) {
-        $message = "Ошибка: " . $e->getMessage();
-    }
+    echo "У вас нет доступа к этой странице!";
     ?>
-<?php 
-    if ($message) {
-        if (str_contains($message, "Вы")) {
-            echo "<p><strong class='notification_yes'>$message</strong></p>";
-        } else if (str_contains($message, "Ошибка")) {
-            echo "<p><strong class='notification_no'>$message</strong></p>";
-        }
-    }
-?> 
-<div class="table-container">
-    <table class="data-table">
-        <thead>
-            <tr>
-            <th>Идентификатор звонка</th>
-                <th>Имя заказчика</th>
-                <th>Номер телефона</th>
-            </tr>
-        </thead>
-        <?php
-        while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
-            echo '<tr>';
-            echo '<td>' . htmlspecialchars($row->CustomerId) . '</td>';
-            echo '<td>' . htmlspecialchars($row->Name) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhoneNumber) . '</td>';
-            echo '</tr>';
-        }
-        ?>
-        </tbody>
-    </table>
-</div>
 <?php } 
 } 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Получаем данные из формы
-    $customerPhone = trim($_POST['customerPhone']);
-    $customerName = trim($_POST['customerName']);
-    $customerId = trim($_POST['customerId'] ?? '');
+    $accountPassword = trim($_POST['accountPassword']);
+    $accountName = trim($_POST['accountName']);
+    $accountPhone = trim($_POST['phonenubmer']);
+
+    $role = $_POST['roles'];
+
+    $accountId = trim($_POST['accountId'] ?? '');
 
     try {
-        if (!empty($customerId)) {
-            // Если `customerId` передан, обновляем существующую запись
+        if (!empty($accountId)) {
+            // Если `accountId` передан, обновляем существующую запись
             $stmt = $pdo->prepare(
-                "UPDATE Customer
-                 SET Name = :Name, PhoneNumber = :PhoneNumber
-                 WHERE CustomerId = :CustomerId"
+                "UPDATE useraccount
+                 SET Login = :Login, Password = :Password, PhoneNumber = :PhoneNumber, StatusRole = :StatusRole
+                 WHERE userId = :userId"
             );
-            $stmt->bindParam(':Name', $customerName, PDO::PARAM_STR);
-            $stmt->bindParam(':PhoneNumber', $customerPhone, PDO::PARAM_STR);
-            $stmt->bindParam(':CustomerId', $customerId, PDO::PARAM_INT);
+            $stmt->bindParam(':Login', $accountName, PDO::PARAM_STR);
+            $stmt->bindParam(':Password', $accountPassword, PDO::PARAM_STR);
+            $stmt->bindParam(':PhoneNumber', $accountPhone, PDO::PARAM_STR);
+            $stmt->bindParam(':StatusRole', $role, PDO::PARAM_STR);
+            $stmt->bindParam(':userId', $accountId, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 $message = "Запись успешно обновлена.";
@@ -167,13 +155,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = "Ошибка: не удалось обновить запись. " ;
             }
         } else {
-            // Если `customerId` отсутствует, добавляем новую запись
+            // Если `accountId` отсутствует, добавляем новую запись
             $stmt = $pdo->prepare(
-                "INSERT INTO Customer (Name, PhoneNumber) 
-                 VALUES (:name, :phoneNumber)"
+                "INSERT INTO useraccount (Login, Password, PhoneNumber, StatusRole) 
+                 VALUES (:Login, :Password, :PhoneNumber, :StatusRole)"
             );
-            $stmt->bindParam(':name', $customerName, PDO::PARAM_STR);
-            $stmt->bindParam(':phoneNumber', $customerPhone, PDO::PARAM_STR);
+            $stmt->bindParam(':Login', $accountName, PDO::PARAM_STR);
+            $stmt->bindParam(':Password', $accountPassword, PDO::PARAM_STR);
+            $stmt->bindParam(':PhoneNumber', $accountPhone, PDO::PARAM_STR);
+            $stmt->bindParam(':StatusRole', $role, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 $message = "Запись успешно добавлена.";
@@ -184,25 +174,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Перенаправление после успешного выполнения
         echo '<script type="text/javascript">';
-        echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/usercalls.php";';
+        echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/userAccount.php";';
         echo '</script>';
     } catch (PDOException $e) {
-        $message = "Ошибка: " . $e->getMessage() . "  id{ $customerId";
+        $message = "Ошибка: " . $e->getMessage();
     }
 }
 
-if (isset($_GET['customerId'])) {
-    $Id = $_GET['customerId'];
+if (isset($_GET['accountId'])) {
+    $Id = $_GET['accountId'];
 
     try {
         // Подготовка запроса с использованием параметра
-        $stmt = $pdo->prepare("DELETE FROM `Customer` WHERE `customerId` = :customerId");
-        $stmt->bindParam(':customerId', $Id, PDO::PARAM_INT); // Привязка параметра
+        $stmt = $pdo->prepare("DELETE FROM `useraccount` WHERE `userId` = :userId");
+        $stmt->bindParam(':userId', $Id, PDO::PARAM_INT); // Привязка параметра
 
         // Выполнение запроса
         if ($stmt->execute()) {
             echo '<script type="text/javascript">';
-            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/usercalls.php";';
+            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/userAccount.php";';
             echo '</script>';
         } else {
             echo "Ошибка при удалении записи.";
@@ -227,9 +217,12 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
     const submitButton = document.getElementById('submitButton');
 
     const rows = document.querySelectorAll('tr.list-items');
-    const customerNameInput = document.getElementById('customerName');
-    const customerPhoneInput = document.getElementById('customerPhone');
-    const customerId = document.getElementById('customerId');
+    const accountNameInput = document.getElementById('accountName');
+    const accountPasswordInput = document.getElementById('accountPassword');
+    const phoneInput = document.getElementById('phonenubmer');
+    const roleInput = document.getElementById('role');
+
+    const accountId = document.getElementById('accountId');
 
 
     toggleButton.addEventListener('click', function () {
@@ -241,9 +234,11 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
             submitButton.classList.add('active');
             updateButton.classList.remove('active');
             // Очищаем инпуты от данных
-            customerId.value = "";
-            customerNameInput.value = "";
-            customerPhoneInput.value = "";
+            accountId.value = "";
+            accountNameInput.value = "";
+            accountPasswordInput.value = "";
+            phoneInput.value = "";
+            roleInput.value = "";
         } else {
             // Если форма закрывается, обе кнопки скрыты
             submitButton.classList.remove('active');
@@ -262,9 +257,13 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
 
             // Заполняем данные формы из строки
             const cells = row.querySelectorAll('td');
-            customerId.value = cells[0].textContent.trim();
-            customerNameInput.value = cells[1].textContent.trim();
-            customerPhoneInput.value = cells[2].textContent.trim();
+            accountId.value = cells[0].textContent.trim();
+            accountNameInput.value = cells[1].textContent.trim();
+            accountPasswordInput.value = cells[2].textContent.trim();
+            phoneInput.value = cells[3].textContent.trim();
+            
+            roleInput.value = cells[4].textContent.trim();
+            console.log(roleInput.value);
         });
     });
 
@@ -296,9 +295,9 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
 
 <?php 
     if ($message) {
-        if (str_contains($message, "Вы")) {
+        if (str_contains($message, "Ошибка")) {
             echo "<p><strong class='notification_yes'>$message</strong></p>";
-        } else if (str_contains($message, "Ошибка")) {
+        } else {
             echo "<p><strong class='notification_no'>$message</strong></p>";
         }
     }

@@ -41,7 +41,7 @@ if (isset($_SESSION["admin-status"])) {
                     <p class="item-description">
                         Раздел в котором хранятся данные об учетный записях пользователей
                     </p>
-                    <a href="#" class="button">Подробнее</a>
+                    <a href="view/userAccount.php" class="button">Подробнее</a>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@ if (isset($_SESSION["admin-status"])) {
                     <p class="item-description">
                         Раздел в котором хранятся данные пользователей, который в свою очередь оставили свои контакты для обратной связи
                     </p>
-                    <a href="http://localhost/vendor_rabota/admin/view/usercalls.php" class="button">Подробнее</a>
+                    <a href="view/usercalls.php" class="button">Подробнее</a>
                 </div>
             </div>
         </div>

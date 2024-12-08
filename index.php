@@ -24,6 +24,11 @@ try {
     <header>
         <a href="#about-us">О нас</a>
         <a href="#anch-slider">Наши товары</a>
+        <?php 
+        if (isset($_SESSION["admin-status"])) { 
+                echo "<a href='admin/'>Дашборд</a>";
+        }
+        ?>
         <a href="#">Контакты</a>
         <a href="#">Помощь</a>
     </header>
@@ -113,10 +118,28 @@ try {
     <button class="slider-btn left-btn">‹</button>
         <div class="infinite-slider">
             <?php 
-            while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { ?>
+            $descriptions = [
+                "Топовый смартфон c потрясающим дизайном.",
+                "Мощный процессор и яркий экран.",
+                "Идеальный выбор для любителей фото.",
+                "Долговечный аккумулятор и быстрая зарядка.",
+                "Стильный и функциональный гаджет.",
+                "Высокая производительность и надежность.",
+                "Инновационные технологии и удобство.",
+                "Современный дизайн и отличные характеристики.",
+                "Качественный звук и мощные динамики.",
+                "Эргономичный корпус и удобство использования."
+            ];
+
+            $descriptionIndex = 0;
+
+            while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { 
+                $description = $descriptions[$descriptionIndex % count($descriptions)];
+                $descriptionIndex++;
+            ?>
                 <div class="slide">
                     <h3><?= htmlspecialchars($row->PhoneMark) ?>  <?= htmlspecialchars($row->PhoneModel) ?></h3>
-                    <p>Топовый смартфон c потрясающим дизайном.</p>
+                    <p><?= htmlspecialchars($description) ?></p>
                     <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?>$</span>
                 </div>        
             <?php }
