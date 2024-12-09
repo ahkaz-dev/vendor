@@ -1,8 +1,3 @@
-<?php 
-session_start();
-
-if (isset($_SESSION["admin-status"])) { 
-    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +6,16 @@ if (isset($_SESSION["admin-status"])) {
     <title>Дашборд</title>
     <link rel="stylesheet" href="../static/style/view/dashboard.css">
 </head>
+<?php 
+session_start();
+
+if (isset($_SESSION["admin-status"])) { ?>
+
 <body>
     <!-- Header -->
     <header class="header">
         <a href="http://localhost/vendor_rabota/" class="header-link">Главная</a>
-        <a href="#" class="header-link">Помощь</a>
+        <a href="http://localhost/vendor_rabota/help/allQuestions.php" class="header-link">Помощь</a>
         <a href="#logout" class="header-link" onclick="location.href='../config/unsetDataSession.php'">Выход</a>
     </header>
 
@@ -76,13 +76,27 @@ if (isset($_SESSION["admin-status"])) {
             </div>
         </div>
         <div class="content-item">
-            <h2 class="category-title">Название категории</h2>
+            <h2 class="category-title">Аксессуары</h2>
             <div class="item-content">
-                <div class="image-placeholder"></div>
+                <div class="image-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="2"></g><g id="SVGRepo_iconCarrier"> <path d="M6 6V7M18 6V7M18.375 10.2727C20.308 10.2727 21 8.47865 21 6.52941C21 4.58017 19.433 3 17.5 3C15.567 3 14 4.58017 14 6.52941V21H17.5V11.0727C17.5 10.7927 17.5 10.6527 17.5545 10.5457C17.6024 10.4517 17.6789 10.3752 17.773 10.3272C17.88 10.2727 18.02 10.2727 18.3001 10.2727H18.375ZM5.625 10.2727C3.692 10.2727 3 8.47865 3 6.52941C3 4.58017 4.567 3 6.5 3C8.433 3 10 4.58017 10 6.52941V21H6.5V11.0727C6.5 10.7927 6.5 10.6527 6.4455 10.5457C6.39757 10.4517 6.32108 10.3752 6.227 10.3272C6.12004 10.2727 5.97998 10.2727 5.69987 10.2727H5.625Z" stroke="#000000" stroke-width="0.528" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                    
+                </div>
                 <div class="text-content">
-                    <h3 class="item-title">Название?</h3>
-                    <p class="item-description">Какой то текст который вписывается сюда как краткое описание раздела</p>
-                    <a href="#" class="button">Подробнее</a>
+                    <h3 class="item-title">Доступные Аксессуары?</h3>
+                    <p class="item-description">Раздел в котором хранятся данные обо всех аксессуарах, хранящихся на складе</p>
+                    <a href="view/allAccessories.php" class="button">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-item">
+            <h2 class="category-title">Отзывы</h2>
+            <div class="item-content">
+                <div class="image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 12H8.01M12 12H12.01M16 12H16.01M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z" stroke="#000000" stroke-width="0.552" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                </div>
+                <div class="text-content">
+                    <h3 class="item-title">Доступные сообщения?</h3>
+                    <p class="item-description">Раздел в котором хранятся все сообщения со страницы контакты</p>
+                    <a href="view/message.php" class="button">Подробнее</a>
                 </div>
             </div>
         </div>
@@ -108,13 +122,15 @@ if (isset($_SESSION["admin-status"])) {
             </div>
         </div>
         <div class="content-item">
-            <h2 class="category-title">Название категории</h2>
+            <h2 class="category-title">Аксессуары</h2>
             <div class="item-content">
-                <div class="image-placeholder"></div>
+                <div class="image-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="2"></g><g id="SVGRepo_iconCarrier"> <path d="M6 6V7M18 6V7M18.375 10.2727C20.308 10.2727 21 8.47865 21 6.52941C21 4.58017 19.433 3 17.5 3C15.567 3 14 4.58017 14 6.52941V21H17.5V11.0727C17.5 10.7927 17.5 10.6527 17.5545 10.5457C17.6024 10.4517 17.6789 10.3752 17.773 10.3272C17.88 10.2727 18.02 10.2727 18.3001 10.2727H18.375ZM5.625 10.2727C3.692 10.2727 3 8.47865 3 6.52941C3 4.58017 4.567 3 6.5 3C8.433 3 10 4.58017 10 6.52941V21H6.5V11.0727C6.5 10.7927 6.5 10.6527 6.4455 10.5457C6.39757 10.4517 6.32108 10.3752 6.227 10.3272C6.12004 10.2727 5.97998 10.2727 5.69987 10.2727H5.625Z" stroke="#000000" stroke-width="0.528" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                    
+                </div>
                 <div class="text-content">
-                    <h3 class="item-title">Название?</h3>
-                    <p class="item-description">Какой то текст который вписывается сюда как краткое описание раздела</p>
-                    <a href="#" class="button">Подробнее</a>
+                    <h3 class="item-title">Доступные Аксессуары?</h3>
+                    <p class="item-description">Раздел в котором хранятся данные обо всех аксессуарах, хранящихся на складе</p>
+                    <a href="view/allAccessories.php" class="button">Подробнее</a>
                 </div>
             </div>
         </div>
@@ -122,7 +138,11 @@ if (isset($_SESSION["admin-status"])) {
     <?php 
         }
     } else { ?>
-    <p>У вас нет доступа к этой странице</p>
+    <div class="access-denied">
+        <h2>Доступ запрещён</h2>
+        <p>У вас нет прав доступа к этому разделу.</p>
+        <a href="http://localhost/vendor_rabota/" class="header-link" style="text-decoration: none;">Главная</a>
+    </div>
     <?php
 } 
 ?>

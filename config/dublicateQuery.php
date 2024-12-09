@@ -23,7 +23,20 @@ DELETE c1 FROM AllPhoneWare c1
 JOIN AllPhoneWare c2 
 ON c1.PhoneMark = c2.PhoneMark AND c1.PhoneMark = c2.PhoneMark AND c1.PhoneModel = c2.PhoneModel AND c1.CountInStorage = c2.CountInStorage AND c1.PhonePrice = c2.PhonePrice
 WHERE c1.PhoneId > c2.PhoneId;";
-if (mysqli_query($conn, $sqlUserAccount) AND mysqli_query($conn, $sqlCustomer) AND mysqli_query($conn, $sqlPhone)) {
+
+$sqlMessage = "
+DELETE c1 FROM UserMessage c1
+JOIN UserMessage c2 
+ON c1.ByWho = c2.ByWho AND c1.Phone = c2.Phone AND c1.MessageText = c2.MessageText 
+WHERE c1.MessageId > c2.MessageId;";
+
+$sqlAccessories = "
+DELETE c1 FROM Accessories c1
+JOIN Accessories c2 
+ON c1.AccessoryName = c2.AccessoryName AND c1.Description = c2.Description AND c1.Price = c2.Price AND c1.StockCount = c2.StockCount 
+WHERE c1.AccessoryId > c2.AccessoryId;";
+if (mysqli_query($conn, $sqlUserAccount) AND mysqli_query($conn, $sqlCustomer) 
+    AND mysqli_query($conn, $sqlPhone) AND mysqli_query($conn, $sqlMessage) AND mysqli_query($conn, $sqlAccessories)) {
     echo "<script>console.log('Дубликаты удалены');". "</script>";
 
 } else {

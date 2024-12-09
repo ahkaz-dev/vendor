@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Телефоны</title>
+    <title>Аксессуары</title>
     <link rel="stylesheet" href="/vendor_rabota/static/style/login.css">
     <link rel="stylesheet" href="/vendor_rabota/static/style/view/usercalls.css">
     <link rel="stylesheet" href="/vendor_rabota/static/style/view/dashboard.css">
     <link rel="stylesheet" href="/vendor_rabota/static/style/component/form-add.css">
 </head>
 <body style="background-color:white;">
-
-    
-   
 <?php 
 session_start();
 require_once('/xampp/htdocs/VENDOR_RABOTA/config/db.php');
@@ -33,28 +30,29 @@ if (isset($_SESSION["admin-status"])) {
         <a href="http://localhost/vendor_rabota/" class="breadcrumb-link">Главная</a>
         <a href="http://localhost/vendor_rabota/admin/" class="breadcrumb-link">Дашборд</a>
         <span>•</span>
-        <a href="#" class="breadcrumb-link">Телефоны</a>
+        <a href="#" class="breadcrumb-link">Аксессуары</a>
     </div>   
 <button id="toggleButton">Добавить</button>
 
 <div id="slideBlock" class="slide-block">
     <form id="slideForm" method="POST">
         <div style="display:ruby-text">
-            <label for="phoneId">Вы работаете с</label>
-            <input type="text" id="phoneId" name="phoneId" readonly style="width: max-content;">
+            <label for="accessoryId">Вы работаете с</label>
+            <input type="text" id="accessoryId" name="accessoryId" readonly style="width: max-content;">
         </div>
 
-        <input type="text" placeholder="Марка" name="mark" id="mark" pattern="^[A-Z][A-Za-z -]*$" style="margin-bottom:0px;" maxlength="15" required>
-        <span style="opacity:0.75;font-size:15px">Пример: Iphone</span>
+        <input type="text" placeholder="Наименование" name="accessoryName" id="accessoryName" pattern="^[A-Z][A-Za-z -]*$" style="margin-bottom:0px;" maxlength="15" required>
+        <span style="opacity:0.75;font-size:15px">Пример: Чехол</span>
         
-        <input type="text" placeholder="Модель" name="model" id="model" pattern="^[A-Za-z0-9 -]*$" style="margin-bottom:0px;" maxlength="10" required>
-        <span style="opacity:0.75;font-size:15px">Пример: 16 PRO</span>
+        <input type="text" placeholder="Описание" name="description" id="description" pattern="^[A-Za-z0-9 -]*$" style="margin-bottom:0px;" maxlength="255" required>
         
-        <input type="text" placeholder="Количество" name="count" id="count" pattern="^\d+$" style="margin-bottom:0px;" maxlength="10" required>
+        <input type="text" placeholder="Цена" name="price" id="price" pattern="^\d+$" style="margin-bottom:0px;" maxlength="25" required>
+        <span style="opacity:0.75;font-size:15px">Пример: 2500</span>
+
+        <input type="text" placeholder="Количество" name="count" id="count" pattern="^\d+$" style="margin-bottom:0px;" maxlength="25" required>
         <span style="opacity:0.75;font-size:15px">Пример: 25</span>
 
-        <input type="text" placeholder="Цена" name="price" id="price" pattern="^\d+$" style="margin-bottom:0px;" maxlength="10" required>
-        <span style="opacity:0.75;font-size:15px">Пример: 148990</span>
+
 
         <br><br>
         <button type="submit" id="updateButton" name="updateRequest">Обновить</button>
@@ -65,7 +63,7 @@ if (isset($_SESSION["admin-status"])) {
 <?php
         try {
             // Пытаемся найти данные в базе
-            $stmt = $pdo->prepare("SELECT * FROM AllPhoneWare ORDER BY PhoneId ASC");
+            $stmt = $pdo->prepare("SELECT * FROM Accessories ORDER BY accessoryId ASC");
             $stmt->execute();
 
         } catch (PDOException $e) {
@@ -76,24 +74,24 @@ if (isset($_SESSION["admin-status"])) {
     <table class="data-table">
         <thead>
             <tr>
-                <th>Идентификатор телефона</th>
-                <th>Марка телефона</th>
-                <th>Модель</th>
-                <th>Кол-во на складе</th>
+                <th>Идентификатор</th>
+                <th>Наименование</th>
+                <th>Описание</th>
                 <th>Цена</th>
+                <th>Кол-во на складе</th>
                 <th>Действия</th>
             </tr>
         </thead>
         <?php
         while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
             echo '<tr class="list-items">';
-            echo '<td>' . htmlspecialchars($row->PhoneId) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhoneMark) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhoneModel) . '</td>';
-            echo '<td>' . htmlspecialchars($row->CountInStorage) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhonePrice) . '</td>';
+            echo '<td>' . htmlspecialchars($row->AccessoryId) . '</td>';
+            echo '<td>' . htmlspecialchars($row->AccessoryName) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Description) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Price) . '</td>';
+            echo '<td>' . htmlspecialchars($row->StockCount) . '</td>';
             echo '<td>
-                      <a href="?phoneId='. htmlspecialchars($row->PhoneId) .'">удалить</a>
+                      <a href="?accessoryId='. htmlspecialchars($row->AccessoryId) .'">удалить</a>
                   </td>';
             echo '</tr>';
         }
@@ -116,12 +114,12 @@ if (isset($_SESSION["admin-status"])) {
         <a href="http://localhost/vendor_rabota/" class="breadcrumb-link">Главная</a>
         <a href="http://localhost/vendor_rabota/admin/" class="breadcrumb-link">Дашборд</a>
         <span>•</span>
-        <a href="#" class="breadcrumb-link">Телефоны</a>
+        <a href="#" class="breadcrumb-link">Аксессуары</a>
     </div> 
     <?php
     try {
         // Пытаемся найти данные в базе
-        $stmt = $pdo->prepare("SELECT * FROM AllPhoneWare ORDER BY PhoneId ASC");
+        $stmt = $pdo->prepare("SELECT * FROM Accessories ORDER BY accessoryId ASC");
         $stmt->execute();
 
     } catch (PDOException $e) {
@@ -132,21 +130,21 @@ if (isset($_SESSION["admin-status"])) {
     <table class="data-table">
         <thead>
             <tr>
-                <th>Идентификатор телефона</th>
-                <th>Марка телефона</th>
-                <th>Модель</th>
-                <th>Кол-во на складе</th>
+            <th>Идентификатор</th>
+                <th>Наименование</th>
+                <th>Описание</th>
                 <th>Цена</th>
+                <th>Кол-во на складе</th>
             </tr>
         </thead>
         <?php
         while ($row = $stmt->fetch(PDO::FETCH_LAZY)) {
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($row->PhoneId) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhoneMark) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhoneModel) . '</td>';
-            echo '<td>' . htmlspecialchars($row->CountInStorage) . '</td>';
-            echo '<td>' . htmlspecialchars($row->PhonePrice) . '</td>';
+            echo '<td>' . htmlspecialchars($row->AccessoryId) . '</td>';
+            echo '<td>' . htmlspecialchars($row->AccessoryName) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Description) . '</td>';
+            echo '<td>' . htmlspecialchars($row->Price) . '</td>';
+            echo '<td>' . htmlspecialchars($row->StockCount) . '</td>';
             echo '</tr>';
         }
         ?>
@@ -165,28 +163,28 @@ if (isset($_SESSION["admin-status"])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Получаем данные из формы
-    $model = trim($_POST['model']);
+    $description = trim($_POST['description']);
     $price = trim($_POST['price']);
     $count = trim($_POST['count']);
-    $mark = trim($_POST['mark']);
-    $phoneId = trim($_POST['phoneId'] ?? '');
+    $accessoryName = trim($_POST['accessoryName']);
+    $accessoryId = trim($_POST['accessoryId'] ?? '');
 
     try {
-        if (!empty($phoneId)) {
-            // Если `phoneId` передан, обновляем существующую запись
+        if (!empty($accessoryId)) {
+            // Если `accessoryId` передан, обновляем существующую запись
             $stmt = $pdo->prepare(
-                "UPDATE AllPhoneWare 
-                 SET PhoneMark = :PhoneMark, 
-                     PhoneModel = :PhoneModel, 
-                     CountInStorage = :CountInStorage, 
-                     PhonePrice = :PhonePrice 
-                 WHERE PhoneId = :PhoneId"
+                "UPDATE Accessories 
+                 SET AccessoryName = :AccessoryName, 
+                     Description = :Description, 
+                     StockCount = :StockCount, 
+                     Price = :Price 
+                 WHERE accessoryId = :accessoryId"
             );
-            $stmt->bindParam(':PhoneMark', $mark, PDO::PARAM_STR);
-            $stmt->bindParam(':PhoneModel', $model, PDO::PARAM_STR);
-            $stmt->bindParam(':CountInStorage', $count, PDO::PARAM_INT);
-            $stmt->bindParam(':PhonePrice', $price, PDO::PARAM_STR);
-            $stmt->bindParam(':PhoneId', $phoneId, PDO::PARAM_INT);
+            $stmt->bindParam(':AccessoryName', $accessoryName, PDO::PARAM_STR);
+            $stmt->bindParam(':Description', $description, PDO::PARAM_STR);
+            $stmt->bindParam(':StockCount', $count, PDO::PARAM_INT);
+            $stmt->bindParam(':Price', $price, PDO::PARAM_STR);
+            $stmt->bindParam(':accessoryId', $accessoryId, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 $message = "Запись успешно обновлена.";
@@ -194,15 +192,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = "Ошибка: не удалось обновить запись.";
             }
         } else {
-            // Если `phoneId` отсутствует, добавляем новую запись
+            // Если `accessoryId` отсутствует, добавляем новую запись
             $stmt = $pdo->prepare(
-                "INSERT INTO AllPhoneWare (PhoneMark, PhoneModel, CountInStorage, PhonePrice) 
-                 VALUES (:PhoneMark, :PhoneModel, :CountInStorage, :PhonePrice)"
+                "INSERT INTO Accessories (AccessoryName, Description, Price, StockCount) 
+                 VALUES (:AccessoryName, :Description, :Price, :StockCount)"
             );
-            $stmt->bindParam(':PhoneMark', $mark, PDO::PARAM_STR);
-            $stmt->bindParam(':PhoneModel', $model, PDO::PARAM_STR);
-            $stmt->bindParam(':CountInStorage', $count, PDO::PARAM_INT);
-            $stmt->bindParam(':PhonePrice', $price, PDO::PARAM_STR);
+            $stmt->bindParam(':AccessoryName', $accessoryName, PDO::PARAM_STR);
+            $stmt->bindParam(':Description', $description, PDO::PARAM_STR);
+            $stmt->bindParam(':StockCount', $count, PDO::PARAM_INT);
+            $stmt->bindParam(':Price', $price, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 $message = "Запись успешно добавлена.";
@@ -213,25 +211,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Перенаправление после успешного выполнения
         echo '<script type="text/javascript">';
-        echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allPhoneProduct.php";';
+        echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allAccessories.php";';
         echo '</script>';
     } catch (PDOException $e) {
         $message = "Ошибка: " . $e->getMessage();
     }
 }
 
-if (isset($_GET['phoneId'])) {
-    $Id = $_GET['phoneId'];
+if (isset($_GET['accessoryId'])) {
+    $Id = $_GET['accessoryId'];
 
     try {
         // Подготовка запроса с использованием параметра
-        $stmt = $pdo->prepare("DELETE FROM `AllPhoneWare` WHERE `phoneId` = :phoneId");
-        $stmt->bindParam(':phoneId', $Id, PDO::PARAM_INT); // Привязка параметра
+        $stmt = $pdo->prepare("DELETE FROM `Accessories` WHERE `AccessoryId` = :AccessoryId");
+        $stmt->bindParam(':AccessoryId', $Id, PDO::PARAM_INT); // Привязка параметра
 
         // Выполнение запроса
         if ($stmt->execute()) {
             echo '<script type="text/javascript">';
-            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allPhoneProduct.php";';
+            echo 'window.location.href = "http://localhost/vendor_rabota/admin/view/allAccessories.php";';
             echo '</script>';
         } else {
             echo "Ошибка при удалении записи.";
@@ -256,11 +254,11 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
     const submitButton = document.getElementById('submitButton');
 
     const rows = document.querySelectorAll('tr.list-items');
-    const markInput = document.getElementById('mark');
-    const modelInput = document.getElementById('model');
+    const accessoryNameInput = document.getElementById('accessoryName');
+    const descriptionInput = document.getElementById('description');
     const countInput = document.getElementById('count');
     const priceInput = document.getElementById('price');
-    const phoneId = document.getElementById('phoneId');
+    const accessoryId = document.getElementById('accessoryId');
 
 
     toggleButton.addEventListener('click', function () {
@@ -272,9 +270,9 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
             submitButton.classList.add('active');
             updateButton.classList.remove('active');
             // Очищаем инпуты от данных
-            phoneId.value = "";
-            markInput.value = "";
-            modelInput.value = "";
+            accessoryId.value = "";
+            accessoryNameInput.value = "";
+            descriptionInput.value = "";
             countInput.value = "";
             priceInput.value = "";
         } else {
@@ -295,11 +293,11 @@ require_once '/xampp/htdocs/VENDOR_RABOTA/config/dublicateQuery.php';  // Под
 
             // Заполняем данные формы из строки
             const cells = row.querySelectorAll('td');
-            phoneId.value = cells[0].textContent.trim();
-            markInput.value = cells[1].textContent.trim();
-            modelInput.value = cells[2].textContent.trim();
-            countInput.value = cells[3].textContent.trim();
-            priceInput.value = cells[4].textContent.trim();
+            accessoryId.value = cells[0].textContent.trim();
+            accessoryNameInput.value = cells[1].textContent.trim();
+            descriptionInput.value = cells[2].textContent.trim();
+            priceInput.value = cells[3].textContent.trim();
+            countInput.value = cells[4].textContent.trim();
         });
     });
 

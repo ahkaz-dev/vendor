@@ -29,8 +29,8 @@ try {
                 echo "<a href='admin/'>Дашборд</a>";
         }
         ?>
-        <a href="#">Контакты</a>
-        <a href="#">Помощь</a>
+        <a href="contact/">Контакты</a>
+        <a href="help/allQuestions.php">Помощь</a>
     </header>
     <main>
         <div class="md1"> <!-- main div 1 -->
@@ -114,43 +114,47 @@ try {
         </h3>
     </div>
 
-    <div class="infinite-slider-container">
-    <button class="slider-btn left-btn">‹</button>
-        <div class="infinite-slider">
-            <?php 
-            $descriptions = [
-                "Топовый смартфон c потрясающим дизайном.",
-                "Мощный процессор и яркий экран.",
-                "Идеальный выбор для любителей фото.",
-                "Долговечный аккумулятор и быстрая зарядка.",
-                "Стильный и функциональный гаджет.",
-                "Высокая производительность и надежность.",
-                "Инновационные технологии и удобство.",
-                "Современный дизайн и отличные характеристики.",
-                "Качественный звук и мощные динамики.",
-                "Эргономичный корпус и удобство использования."
-            ];
-
-            $descriptionIndex = 0;
-
-            while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { 
-                $description = $descriptions[$descriptionIndex % count($descriptions)];
-                $descriptionIndex++;
-            ?>
-                <div class="slide">
-                    <h3><?= htmlspecialchars($row->PhoneMark) ?>  <?= htmlspecialchars($row->PhoneModel) ?></h3>
-                    <p><?= htmlspecialchars($description) ?></p>
-                    <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?>$</span>
-                </div>        
-            <?php }
-            ?>
+    <?php 
+    if ($stmt->rowCount() > 0) { ?>
+        <div class="infinite-slider-container">
+        <button class="slider-btn left-btn">‹</button>
+            <div class="infinite-slider">
+                <?php 
+                $descriptions = [
+                    "Топовый смартфон c потрясающим дизайном.",
+                    "Мощный процессор и яркий экран.",
+                    "Идеальный выбор для любителей фото.",
+                    "Долговечный аккумулятор и быстрая зарядка.",
+                    "Стильный и функциональный гаджет.",
+                    "Высокая производительность и надежность.",
+                    "Инновационные технологии и удобство.",
+                    "Современный дизайн и отличные характеристики.",
+                    "Качественный звук и мощные динамики.",
+                    "Эргономичный корпус и удобство использования."
+                ];
+    
+                $descriptionIndex = 0;
+    
+                while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { 
+                    $description = $descriptions[$descriptionIndex % count($descriptions)];
+                    $descriptionIndex++;
+                ?>
+                    <div class="slide">
+                        <h3><?= htmlspecialchars($row->PhoneMark) ?>  <?= htmlspecialchars($row->PhoneModel) ?></h3>
+                        <p><?= htmlspecialchars($description) ?></p>
+                        <span>Цена: <?= htmlspecialchars($row->PhonePrice) ?>$</span>
+                    </div>        
+                <?php }
+                ?>
+            </div>
+        <button class="slider-btn right-btn">›</button>
         </div>
-    <button class="slider-btn right-btn">›</button>
-    </div>
+        <div class="back-img-slider"></div>        
+    <?php } else { ?>
+        <p style="text-align:center;">   - Кажется их нет</p>
+    <?php } ?>
 
 
-
-    <div class="back-img-slider"></div>
     <div class="text-block-label" style="margin:2% 0px 0px 0px;display: flex;justify-content: center;">
         <p class="slider-label">
             Почему именно наши товары?
@@ -205,8 +209,8 @@ try {
     <div class="footer-links">
       <a href="#about-us">О нас</a>
       <a href="#anch-slider">Наши товары</a>
-      <a href="#contacts">Контакты</a>
-      <a href="#help">Помощь</a>
+      <a href="contact/">Контакты</a>
+      <a href="help/allQuestions.php">Помощь</a>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2024 Vendor. Все права защищены.</p>

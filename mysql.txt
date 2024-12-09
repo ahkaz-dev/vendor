@@ -35,9 +35,54 @@
     PRIMARY KEY (UserId)
     );
 
+    Отзывы или сообщения
+    CREATE TABLE UserMessage (
+    MessageId int NOT NULL AUTO_INCREMENT,
+    ByWho varchar(255) NOT NULL,
+    Phone varchar(11) NOT NULL,
+    MessageText varchar(550) NOT NULL,
+   
+    PRIMARY KEY (MessageId)
+    );
+
+    Аксессуары, которые есть на складе
+    CREATE TABLE Accessories (
+    AccessoryId int NOT NULL AUTO_INCREMENT,
+    AccessoryName varchar(100) NOT NULL,
+    Description varchar(255) NOT NULL,
+    Price varchar(25),
+    StockCount varchar(25),
+    
+    PRIMARY KEY (AccessoryId) 
+    );
+
+
 Если нужно сбросить счетчик id:
     ALTER TABLE useraccount AUTO_INCREMENT = 1
 
 Роли доступа:
     - Пользователь, дается при регистрации
     - Модератор, требуется выдать самостоятельно в бд
+
+Изначально слайдер не работает - нужно добавить данные в таблицу allphoneware, если лень, тестовые данные:
+    INSERT INTO `allphoneware` (`PhoneId`, `PhoneMark`, `PhoneModel`, `CountInStorage`, `PhonePrice`) VALUES
+    (17, 'Iphone', 'asdad', '15', '5000'),
+    (20, 'Samsung', '13', '34', '168990'),
+    (21, 'Iphone', '16 PRO', '58', '65000'),
+    (22, 'Iphone', '16 PRO', '15', '148990'),
+    (23, 'Xiami', '12', '10', '6500'),
+    (24, 'Xiami', '20', '5', '5500'),
+    (25, 'Samsun', '6', '7', '15000'),
+    (26, 'Lenovo', '10', '35', '10400'),
+    (27, 'Iphone', '16 PRO', '25', '148990'),
+    (28, 'Iphone', 'PRO 15', '12', '1232222'),
+    (29, 'Iphone', '123', '123', '123'),
+    (33, 'Asus', '123', '123', '148990');  
+
+Тестовые данные для Аксессуаров:
+    INSERT INTO `Accessories` (`AccessoryId`, `AccessoryName`, `Description`, `Price`, `StockCount`) VALUES
+    (1, 'Чехол для телефона', 'Прочный и стильный чехол для защиты телефона.', '1500', '50'),
+    (2, 'Защитное стекло', 'Ультрапрочное стекло с олеофобным покрытием.', '500', '120'),
+    (3, 'Беспроводные наушники', 'Высококачественный звук и длительное время работы.', '7500', '35'),
+    (4, 'Портативный зарядник', 'Удобный power bank с емкостью 20000 мАч.', '3000', '40'),
+    (5, 'Кабель для зарядки', 'Быстрая зарядка с поддержкой USB-C.', '800', '100');

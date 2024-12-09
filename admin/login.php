@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION["admin-id"] = $user["UserId"]; 
 
             echo '<script type="text/javascript">';
-            echo 'window.location.href = "http://localhost/vendor_rabota/admin/index.php";';
+            echo 'window.location.href = "http://localhost/vendor_rabota/";';
             echo '</script>';
         } else {
             $message = "Не удалось найти пользователя";

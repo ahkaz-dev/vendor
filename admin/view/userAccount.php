@@ -10,11 +10,20 @@
     <link rel="stylesheet" href="/vendor_rabota/static/style/component/form-add.css">
 </head>
 <body style="background-color:white;">
+
+<?php 
+session_start();
+require_once('/xampp/htdocs/VENDOR_RABOTA/config/db.php');
+$message = '';
+
+if (isset($_SESSION["admin-status"])) { 
+    if ($_SESSION["admin-status"] == "Модератор") { ?>
+
     <!-- Header -->
     <header class="header">
         <a href="http://localhost/vendor_rabota/admin/" class="header-link">Назад</a>
         <a href="http://localhost/vendor_rabota/" class="header-link">Главная</a>
-        <a href="#" class="header-link">Помощь</a>
+        <a href="http://localhost/vendor_rabota/help/allQuestions.php" class="header-link">Помощь</a>
         <a href="#logout" class="header-link" onclick="location.href='http://localhost/vendor_rabota/config/unsetDataSession.php'">Выход</a>
     </header>
       
@@ -24,16 +33,8 @@
         <a href="http://localhost/vendor_rabota/admin/" class="breadcrumb-link">Дашборд</a>
         <span>•</span>
         <a href="#" class="breadcrumb-link">Учетные записи пользователей</a>
-    </div>   
-    
-   
-<?php 
-session_start();
-require_once('/xampp/htdocs/VENDOR_RABOTA/config/db.php');
-$message = '';
+    </div>  
 
-if (isset($_SESSION["admin-status"])) { 
-    if ($_SESSION["admin-status"] == "Модератор") { ?>
 <button id="toggleButton">Добавить</button>
 
 <div id="slideBlock" class="slide-block">
@@ -119,11 +120,19 @@ if (isset($_SESSION["admin-status"])) {
 </div>      
 <?php
     } else if ($_SESSION["admin-status"] == "Пользователь") { ?>
-    <?php
-    echo "У вас нет доступа к этой странице!";
-    ?>
+        <div class="access-denied">
+            <h2>Доступ запрещён</h2>
+            <p>У вас нет прав доступа к этому разделу.</p>
+            <a href="http://localhost/vendor_rabota/" class="header-link" style="text-decoration: none;">Главная</a>
+        </div>
 <?php } 
-} 
+} else { ?>
+    <div class="access-denied">
+        <h2>Доступ запрещён</h2>
+        <p>У вас нет прав доступа к этому разделу.</p>
+        <a href="http://localhost/vendor_rabota/" class="header-link" style="text-decoration: none;">Главная</a>
+    </div>
+<?php }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Получаем данные из формы
